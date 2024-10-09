@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .business_name {
+            font-size: 40px;
+            text-align: center;
+        }
+
+        body {
+            background-color: #f5f5dc;
+        }
+
+        .menu-list {
+            list-style-type: none;
+        }
+
+        .menu-list img{
+            width: 300px;
+            max-width: 70%
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center; 
+        }
+
+        .button-container a{
+            text-decoration: none;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #01d0ff;
+            color: #000000;
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+            display: flex;
+            justify-content: center;
+        }
+
+        button:hover {
+            background-color: #f5f5dc;
+        }
+    </style>
+    <title>Order</title>
+</head>
+<body>
+    <h1 class="business_name">Joe's HotDog Stand</h1>
+    <h2 class="page_title">Your order Details:</h2>
+    <script>
+        let foods = ['Hotdog', 'Fries', 'Soda'];
+        const foodToPrice = {
+            'Hotdog' : 4.80,
+            'Fries' : 3.95,
+            'Soda' : 1.99
+        };
+        let foodToQuant = {
+            'Hotdog' : 0,
+            'Fries' : 0,
+            'Soda' : 0
+        };
+        let foodToCost = {
+            'Hotdog' : 0,
+            'Fries' : 0,
+            'Soda' : 0
+        };
+        function showMoney(number) {
+            number = Math.round(number * 100) / 100;
+            number = number.toString().split('.');
+            result = '';
+            if (number.length === 1) {
+                result = number[0] + '.00';
+            }else {
+                if (number[1].length === 1) {
+                    result = number[0] + '.' + number[1] + '0';
+                }else {
+                    result = number[0] + '.' + number[1];
+                }
+            }
+            return result;
+        }
+        let subTotalBeforeDiscount = 0;
+        for (let i = 0; i < 3; i++) {
+            foodToQuant[foods[i]] = parseInt(prompt("How many " + foods[i] + " do you want to buy? (Input number only)"));
+            foodToCost[foods[i]] = foodToQuant[foods[i]] * foodToPrice[foods[i]];
+            subTotalBeforeDiscount += foodToCost[foods[i]];
+        }
+        document.write("<h4>Items Ordered:</h4>");
+        for (let i = 0; i < 3; i++) {
+            document.write(foodToQuant[foods[i]] + " " + foods[i] + "(s) $" + showMoney(foodToCost[foods[i]]) + "<br>");
+        }
+        subTotalAfterDiscount = subTotalBeforeDiscount;
+        if (subTotalBeforeDiscount >= 25) {
+            subTotalAfterDiscount *= 0.9;
+        }
+        subTotalAfterTax = subTotalAfterDiscount * 1.0625
+        document.write("<h4>Pre-Discount:</h4>");
+        document.write("Total Cost: $" + showMoney(subTotalBeforeDiscount));
+        document.write("<h4>Post-Discount:</h4>");
+        document.write("Total Cost: $" + showMoney(subTotalAfterDiscount));
+        document.write("<h4>Taxes:</h4>");
+        document.write("Total Tax: $" + showMoney(subTotalAfterTax - subTotalAfterDiscount));
+        document.write("<h4>Final Payable:</h4>");
+        document.write("Total Cost: $" + showMoney(subTotalAfterTax));
+    </script>
+    <hr>
+    <h2 class="page_title">Menu:</h2>
+    <ul class="menu-list">
+        <li>
+            <div class="food-item">
+                <img src="./images/french-fries.jpeg"/>
+                French Fries: $3.95(each)
+            </div>
+        </li>
+        <li>
+            <div class="food-item"></div>
+                <img src="./images/hotdogs.jpeg"/>
+                HotDogs: $4.80(each)
+            </div>
+        </li>
+        <li>
+            <div class="food-item"></div>
+                <img src="./images/drinks.jpeg"/>
+                HotDogs: $1.99(each)
+            </div>
+        </li>
+    </ul>
+    <div class="button-container">
+        <a href="./index.html">
+            <button type="button">Order Again!!!</button>
+        </a>
+    </div>
+</body>
+</html>
